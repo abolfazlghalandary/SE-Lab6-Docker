@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  interface:
+    build:
+      context: ./interface
+      dockerfile: Dockerfile
+    container_name: interface_service
+    ports:
+      - '4000:3000'
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/mydatabase
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_service
+    ports:
+      - '5000:3000'
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/mydatabase
+    deploy:
+      replicas: 1
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
