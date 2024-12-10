@@ -1,92 +1,38 @@
-const http = require('http');
-const url = require('url');
-const { createUser, getAllUsers, getUserById, updateUser, deleteUser } = require('./crud');
+const { createUser, getUserById, updateUser, deleteUser } = require('./crud');
 
-const server = http.createServer(async (req, res) => {
-    const parsedUrl = url.parse(req.url, true);
-    const method = req.method;
-    const pathname = parsedUrl.pathname;
+var express = require('express');
+var app = express();
+var fs = require("fs");
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({  extended: true }));
 
-    res.setHeader('Content-Type', 'application/json');
 
-    try {
-        if (pathname === '/users' && method === 'POST') {
-            let body = '';
-            req.on('data', chunk => {
-                body += chunk.toString();
-            });
+app.get('/:id', async function (req, res) {
+    const user = await getUserById(req.params.id);
+    res.end(JSON.stringify(user));
+})
 
-            req.on('end', async () => {
-                const { name, email, age } = JSON.parse(body);
-                const user = await createUser(name, email, age);
-                res.statusCode = 201;
-                res.end(JSON.stringify(user));
-            });
 
-        } else if (pathname === '/users' && method === 'GET') {
-            // Get all users
-            const users = await getAllUsers();
-            res.statusCode = 200;
-            res.end(JSON.stringify(users));
+app.post('/', async function (req, res) {
+    const user = req.body;
+    await createUser(user.name, user.email, user.age);
+    res.end(JSON.stringify(users));
+})
 
-        } else if (pathname.startsWith('/users/') && method === 'GET') {
-            // Get a user by ID
-            const id = pathname.split('/')[2];
-            const user = await getUserById(id);
-            if (user) {
-                res.statusCode = 200;
-                res.end(JSON.stringify(user));
-            } else {
-                res.statusCode = 404;
-                res.end(JSON.stringify({ error: 'User not found' }));
-            }
+app.delete('/:id', async function (req, res) {
+    var id = "user" + req.params.id;
+    await deleteUser(id)
+    res.end(JSON.stringify(data));
+})
 
-        } else if (pathname.startsWith('/users/') && method === 'PUT') {
-            // Update a user by ID
-            const id = pathname.split('/')[2];
-            let body = '';
-            req.on('data', chunk => {
-                body += chunk.toString();
-            });
+app.put("/:id", async function (req, res) {
+    var id = req.params.id;
+    const user = req.body;
+    await updateUser(id, user.name, user.email, user.age);
+    res.end(JSON.stringify(users));
+})
 
-            req.on('end', async () => {
-                const { name, email, age } = JSON.parse(body);
-                const user = await updateUser(id, name, email, age);
-                if (user) {
-                    res.statusCode = 200;
-                    res.end(JSON.stringify(user));
-                } else {
-                    res.statusCode = 404;
-                    res.end(JSON.stringify({ error: 'User not found' }));
-                }
-            });
-
-        } else if (pathname.startsWith('/users/') && method === 'DELETE') {
-            // Delete a user by ID
-            const id = pathname.split('/')[2];
-            const success = await deleteUser(id);
-            if (success) {
-                res.statusCode = 200;
-                res.end(JSON.stringify({ message: 'User deleted' }));
-            } else {
-                res.statusCode = 404;
-                res.end(JSON.stringify({ error: 'User not found' }));
-            }
-
-        } else {
-            // Handle unknown routes
-            res.statusCode = 404;
-            res.end(JSON.stringify({ error: 'Route not found' }));
-        }
-    } catch (err) {
-        console.error('Error:', err);
-        res.statusCode = 500;
-        res.end(JSON.stringify({ error: 'Internal server error' }));
-    }
-});
-
-// Start the server
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+var server = app.listen(3000, function () {
+    console.log("Express App running at http://127.0.0.1:5000/");
+})
