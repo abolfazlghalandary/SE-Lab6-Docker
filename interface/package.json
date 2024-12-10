@@ -1,0 +1,22 @@
+{
+  "name": "js-proj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abolfazlghalandary/SE-Lab6-Docker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abolfazlghalandary/SE-Lab6-Docker/issues"
+  },
+  "homepage": "https://github.com/abolfazlghalandary/SE-Lab6-Docker#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
