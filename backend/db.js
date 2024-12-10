@@ -1,9 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('database_name', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'postgres'
-});
+const sequelize = new Sequelize("sqlite::memory:");
 
 async function testConnection() {
     try {
