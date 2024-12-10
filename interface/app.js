@@ -8,35 +8,35 @@ app.use(bodyParser.urlencoded({  extended: true }));
 const fetch = require('node-fetch'); 
 
 
-app.get('/:id', function (req, res) {
+app.get('/:id', async function (req, res) {
     console.log("interface get called")
     const id = req.params.id;
-    const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end( JSON.stringify(user));
+    const response = await fetch(`http://backend:5000/${id}`);
+    res.end(1);
 })
 
 
-app.post('/', function (req, res) {
+app.post('/', async function (req, res) {
     console.log("interface post called")
     const user = req.body;
     const id = user.id;
-    const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end( JSON.stringify(users));
+    // const response = await fetch(`http://localhost:3000/users/${id}`);
+    res.end(1);
 })
 
-app.delete('/:id', function (req, res) {
+app.delete('/:id', async function (req, res) {
     console.log("interface delete called")
     const id = req.params.id;
-    const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end( JSON.stringify(data));
+    // const response = await fetch(`http://localhost:3000/users/${id}`);
+    res.end(1);
 })
 
-app.put("/:id", function(req, res) {
+app.put("/:id", async function (req, res) {
     console.log("interface put called")
     const id = req.params.id;
     const user = req.body;
-    const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end( JSON.stringify(users));
+    // const response = await fetch(`http://localhost:3000/users/${id}`);
+    res.end(JSON.stringify(1));
 })
 app.listen(3000, function () {
     console.log("Express App running at http://127.0.0.1:3000/");
