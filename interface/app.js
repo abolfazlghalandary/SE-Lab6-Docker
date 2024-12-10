@@ -1,49 +1,37 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
-var bodyParser = require('body-parser')
+const express = require('express');
+const app = express();
+const fs = require("fs");
+const bodyParser = require('body-parser')
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({  extended: true }));
 
 
 app.get('/:id', function (req, res) {
-    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-        var users = JSON.parse( data );
-        var user = users["user" + req.params.id]
-        res.end( JSON.stringify(user));
-    });
+    console.log("interface get called")
+    const id = req.params.id;
+    res.end( JSON.stringify(user));
 })
 
 
 app.post('/', function (req, res) {
-    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-        var users = JSON.parse( data );
-        var user = req.body;
-        users["user"+user.id] = user
-        res.end( JSON.stringify(users));
-    });
+    console.log("interface post called")
+    const user = req.body;
+    const id = user.id;
+    res.end( JSON.stringify(users));
 })
 
 app.delete('/:id', function (req, res) {
-    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-        data = JSON.parse( data );
-        var id = "user"+req.params.id;
-        var user = data[id];
-        delete data[ "user"+req.params.id];
-        res.end( JSON.stringify(data));
-    });
+    console.log("interface delete called")
+    const id = req.params.id;
+    res.end( JSON.stringify(data));
 })
 
 app.put("/:id", function(req, res) {
-    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-
-        var users = JSON.parse( data );
-        var id = "user"+req.params.id;
-        users[id]=req.body;
-        res.end( JSON.stringify(users));
-    })
+    console.log("interface put called")
+    const id = req.params.id;
+    const user = req.body;
+    res.end( JSON.stringify(users));
 })
-
-var server = app.listen(3000, function () {
-    console.log("Express App running at http://127.0.0.1:5000/");
-})
+app.listen(3000, function () {
+    console.log("Express App running at http://127.0.0.1:3000/");
+});

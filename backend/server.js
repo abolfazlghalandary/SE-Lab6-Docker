@@ -32,7 +32,6 @@ app.put("/:id", async function (req, res) {
     await updateUser(id, user.name, user.email, user.age);
     res.end(JSON.stringify(users));
 })
-
-var server = app.listen(3000, function () {
+app.listen(3000, function () {
     console.log("Express App running at http://127.0.0.1:5000/");
-})
+});
