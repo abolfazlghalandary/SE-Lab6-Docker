@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/abolfazlghalandary/SE-Lab6-Docker#readme",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "express": "^4.21.2"
   }
 }
