@@ -41,3 +41,5 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgres://user:password@postgres:5432/mydatabase
+    deploy:
+      replicas: 1
