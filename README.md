@@ -11,3 +11,7 @@
 برای انجام پروژه ابتدا دو سرویس interface و backend را ایجاد کردیم که از طریق API call بتوانیم با آنها در ارتباط باشیم با این تفاوت که interface درخواست را برای backend ارسال می‌کند و backend با دیتابیس تعامل می‌کند. (تصویر متد GET در زیر آورده شده):
 ![image](https://github.com/user-attachments/assets/17a7eb2f-0171-4ae1-891c-89978070c64c)
 ![image](https://github.com/user-attachments/assets/1b0b09ec-e189-4a69-8fd4-1a287e2e8ef6)
+
+برای بالا آوردن سرویس‌ها با داکر برای هر کدام داکر فایل ساده‌ای نوشتیم و در کنار یک کانتینر شامل postgres در یک docker compose گذاشتیم:
+![image](https://github.com/user-attachments/assets/1c976b96-526d-4851-957f-4b396f1111e4)
+این docker compose سرویس‌ها را بالا آورده (البته پس از اطمینان از بالا آمدن postgres که به مشکل connection نخوریم.
