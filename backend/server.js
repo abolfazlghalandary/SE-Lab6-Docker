@@ -15,22 +15,22 @@ app.get('/:id', async function (req, res) {
 
 
 app.post('/', async function (req, res) {
-    const user = req.body;
-    await createUser(user.name, user.email, user.age);
-    res.end(JSON.stringify(users));
+    let user = req.body;
+    user = await createUser(user.name, user.email, user.age);
+    res.end(JSON.stringify(user));
 })
 
 app.delete('/:id', async function (req, res) {
-    var id = "user" + req.params.id;
-    await deleteUser(id)
-    res.end(JSON.stringify(data));
+    var id = req.params.id;
+    const user = await deleteUser(id)
+    res.end(JSON.stringify(user));
 })
 
 app.put("/:id", async function (req, res) {
     var id = req.params.id;
-    const user = req.body;
-    await updateUser(id, user.name, user.email, user.age);
-    res.end(JSON.stringify(users));
+    let user = req.body;
+    user = await updateUser(id, user.name, user.email, user.age);
+    res.end(JSON.stringify(user));
 })
 app.listen(3000, function () {
     console.log("Express App running at http://127.0.0.1:5000/");
