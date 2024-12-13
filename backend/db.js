@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize("sqlite::memory:");
-// const sequelize = new Sequelize('postgres://user:password@postgres:5432/mydatabase')
+const sequelize = new Sequelize('postgres://user:password@postgres:5432/mydatabase')
 
 async function testConnection() {
     try {
