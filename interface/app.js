@@ -1,43 +1,70 @@
-const express = require('express');
+import express from 'express'
 const app = express();
-const fs = require("fs");
-const bodyParser = require('body-parser')
+import bodyParser from 'body-parser'
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({  extended: true }));
-
-const fetch = require('node-fetch'); 
+import fetch from 'node-fetch';
 
 
 app.get('/:id', async function (req, res) {
     console.log("interface get called")
     const id = req.params.id;
-    const response = await fetch(`http://backend:5000/${id}`);
-    res.end(1);
+    const response = await fetch(`http://localhost:3000/${id}`);
+    const data = await response.json();
+    res.end(JSON.stringify(data));
 })
 
 
 app.post('/', async function (req, res) {
-    console.log("interface post called")
+    console.log("interface post called");
     const user = req.body;
-    const id = user.id;
-    // const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end(1);
-})
+
+    try {
+        const response = await fetch(`http://localhost:3000/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error during fetch:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 app.delete('/:id', async function (req, res) {
     console.log("interface delete called")
     const id = req.params.id;
-    // const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end(1);
+    const response = await fetch(`http://localhost:3000/${id}`, {method: 'DELETE'});
+    const data = await response.json();
+    res.json(data);
 })
 
 app.put("/:id", async function (req, res) {
     console.log("interface put called")
     const id = req.params.id;
     const user = req.body;
-    // const response = await fetch(`http://localhost:3000/users/${id}`);
-    res.end(JSON.stringify(1));
+    try {
+        const response = await fetch(`http://localhost:3000/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error during fetch:', error);
+        res.status(500).send('Internal Server Error');
+    }
 })
-app.listen(3000, function () {
-    console.log("Express App running at http://127.0.0.1:3000/");
+app.listen(4000, function () {
+    console.log("Express App running at http://127.0.0.1:4000/");
 });
