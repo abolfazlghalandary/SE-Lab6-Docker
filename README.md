@@ -40,3 +40,5 @@ backend:
 
 ![image](https://github.com/user-attachments/assets/bd0aa211-ebe7-4244-9213-cf4b47a48f73)
 
+
+در صورت زیاد شدن لود روی اپلیکیشن کافیست به کمک آپشن replicas برای سرویس backend ذر docker compose و با زیاد کردنش تعداد کانتینرهای آن را افزایش داده تا بتوانیم لود را تحمل کنیم.
